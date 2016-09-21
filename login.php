@@ -4,7 +4,7 @@
 	//echo "<br>";
 	//var_dump($_POST);
 	
-	$loginEmailError = "*";
+	$loginEmailError = "";
 	
 	if (isset ($_POST["loginEmail"])) {
 		
@@ -18,7 +18,7 @@
 	}
 	
 	
-	$loginPasswordError = "*";
+	$loginPasswordError = "";
 	
 	if (isset ($_POST["loginPassword"])) {
 		
@@ -38,7 +38,7 @@
 	
 	
 	$signupEmailError = "*";
-	
+	$signupEmail = "";
 	//kas keegi vajutas nuppu 
 	
 	if (isset ($_POST["signupEmail"])) {
@@ -50,6 +50,8 @@
 			//on tühi
 			$signupEmailError = "Väli on kohustuslik!";
 		
+		} else {
+			$signupEmail = $_POST["signupEmail"];
 		}
 	
 	}
@@ -90,7 +92,7 @@
 	
 	}
 	
-	$genderError = "*";
+	$genderError = "";
 	
 	if (isset ($_POST["gender"])) {
 		
@@ -102,6 +104,19 @@
 		}
 	
 	}
+	
+		$gender = "Mees";
+	
+	if (isset ($_POST["gender"])) {
+		if (empty ($_POST["gender"])) {
+			$genderError = "* Väli on kohustuslik!";
+		} else {
+			$gender = $_POST["gender"];
+		}
+		
+	} 
+	
+	
 ?>
 
 <!DOCTYPE html>
@@ -135,14 +150,14 @@
 	</form>
 	
 	<br><br>
-	
+	<h1>Loo kasutaja</h1>
 	<form method="POST">
 	
 		<label>E-Post:</label> 
 		
 		<br>
 		
-		<input name="signupEmail" type = "email" > <?php echo $signupEmailError ; ?>
+		<input name="signupEmail" type = "email" value="<?=$signupEmail;?>"> <?php echo $signupEmailError ; ?>
 		
 		<br><br>
 		
@@ -169,12 +184,21 @@
 		
 		<br>
 		
-		<input name="gender" type = "radio" value ="Mees" >	Mees	<?php echo $genderError; ?>
+		<?php if ($gender == "Mees") { ?>
+			<input name="gender" type = "radio" value ="Mees" checked >	Mees
+		<?php } else { ?>
+			<input name="gender" type = "radio" value ="Mees" >	Mees
+		<?php } ?>
+		
 		<br>
-		<input name="gender" type = "radio" value ="Naine" > Naine
+		
+		<?php if ($gender == "Naine") { ?>
+			<input name="gender" type = "radio" value ="Naine" checked > Naine
+		<?php } else { ?>
+			<input name="gender" type = "radio" value ="Naine" > Naine
+		<?php } ?>
 		
 		<br><br>
-		
 		
 		<input type = "submit" value = "LOO KASUTAJA" >
 		
@@ -189,21 +213,3 @@
 	
 	</body>
 </html>
-
-<?php
-
-//mvp - lehekülg, kus saab kirja panna kõik sarjad, mida vaatad ja kaugel omadega oled.
-	//endal pidevalt probleem sellega, et mingi sari jääb pooleli kuskilt hooaja keskelt ning siis kunagi hiljem läheb kõvasti aega, et jälle õige koht üles leida
-	//vaadatud sarju saaks ka hinnata 
-	//sisestades soo ja vanuse saaks ka soovitada sarnase taustaga kasutajatele sinupoolt kõrgelt hinnatud sarju jne.
-	//
-	//
-	//
-	//
-
-
-
-
-?>
-
-	 
