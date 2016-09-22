@@ -1,5 +1,8 @@
 <?php
 	
+	require("../../config.php");
+	
+	
 	//var_dump($_GET);
 	//echo "<br>";
 	//var_dump($_POST);
@@ -37,7 +40,7 @@
 	
 	
 	
-	$signupEmailError = "*";
+	$signupEmailError = "";
 	$signupEmail = "";
 	//kas keegi vajutas nuppu 
 	
@@ -58,7 +61,7 @@
 	
 	//kas epost on tühi
 	
-	$signupPasswordError = "*";
+	$signupPasswordError = "";
 	
 	if (isset ($_POST["signupPassword"])) {
 		
@@ -78,7 +81,7 @@
 	}
 	
 	
-	$birthdateError = "*";
+	$birthdateError = "";
 	
 	if (isset ($_POST["birthdate"])) {
 		
@@ -115,6 +118,60 @@
 		}
 		
 	} 
+	
+	if ( $signupEmailError == "" &&
+		 $signupPasswordError == "" &&
+		 
+		 isset($_POST["signupEmail"]) &&
+		 isset($_POST["signupPassword"])
+		 
+		 
+		 
+		) {
+	
+		//kõik olemas, vigu polnud
+		echo "SALVESTAN...<br>";
+		echo "email ".$signupEmail."<br>";
+		echo "parool ".$_POST["signupPassword"]."<br>";
+	
+		$password = hash("sha512",$_POST["signupPassword"]);
+	
+		echo $password ;
+		
+		//loon ühenduse 
+		
+		$database = "if16_taneotsa_4";
+		
+		$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword, $database);
+		
+		$stmt = $mysqli ->prepare("INSERT INTO user_sample (email, password) VALUE(?,?)");
+		
+		//asendan küsimärgid
+		//iga märgikohta tuleb lisada üks täht ehk mis tüüpi muutuja on
+		//	s - string
+		//	i - int,arv
+		//  d - double
+		$stmt->bind_param("ss", $signupEmail, $password);
+		
+		
+		//täida käsku 
+		if($stmt->execute() ) {
+			echo "õnnests";			
+		} else{
+			echo "ERROR".$stmterror;
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 ?>
