@@ -121,11 +121,13 @@
 	
 	if ( $signupEmailError == "" &&
 		 $signupPasswordError == "" &&
+		 $birthdateError == "" &&
+		
 		 
 		 isset($_POST["signupEmail"]) &&
-		 isset($_POST["signupPassword"])
-		 
-		 
+		 isset($_POST["signupPassword"]) &&
+		 isset($_POST["birthdate"]) &&
+		 isset($_POST["gender"])
 		 
 		) {
 	
@@ -133,7 +135,9 @@
 		echo "SALVESTAN...<br>";
 		echo "email ".$signupEmail."<br>";
 		echo "parool ".$_POST["signupPassword"]."<br>";
-	
+		echo "sünnikuupäev ".$_POST["birthdate"]."<br>";
+		echo "sugu " .$_POST["gender"]. "<br>";
+		
 		$password = hash("sha512",$_POST["signupPassword"]);
 	
 		echo $password ;
@@ -144,14 +148,14 @@
 		
 		$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword, $database);
 		
-		$stmt = $mysqli ->prepare("INSERT INTO user_sample (email, password) VALUE(?,?)");
-		
+		$stmt = $mysqli ->prepare("INSERT INTO user_sample (email, password, gender, birthdate) VALUE(?,?,?,?)");
+		echo $mysqli->error;
 		//asendan küsimärgid
 		//iga märgikohta tuleb lisada üks täht ehk mis tüüpi muutuja on
 		//	s - string
 		//	i - int,arv
 		//  d - double
-		$stmt->bind_param("ss", $signupEmail, $password);
+		$stmt->bind_param("ssss", $signupEmail, $password, $gender, $_POST["birthdate"]);
 		
 		
 		//täida käsku 
