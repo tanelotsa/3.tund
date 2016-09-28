@@ -46,7 +46,7 @@
 		$stmt->bind_param("s", $email);
 		
 		//rea kohta tulba väärtus
-		$stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created);
+		$stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created, $grender, $birthdate);
 		
 		$stmt->execute();
 		//ainult SELECT'i puhul
