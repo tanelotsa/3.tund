@@ -1,7 +1,7 @@
 <?php
 	
 	require("../../config.php");
-	
+	require("functions.php");
 	
 	//var_dump($_GET);
 	//echo "<br>";
@@ -33,13 +33,7 @@
 		}
 	
 	}
-	
-	
-	
-	
-	
-	
-	
+		
 	$signupEmailError = "";
 	$signupEmail = "";
 	//kas keegi vajutas nuppu 
@@ -142,44 +136,29 @@
 	
 		echo $password ;
 		
-		//loon ühenduse 
-		
-		$database = "if16_taneotsa_4";
-		
-		$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword, $database);
-		
-		$stmt = $mysqli ->prepare("INSERT INTO user_sample (email, password, gender, birthdate) VALUE(?,?,?,?)");
-		echo $mysqli->error;
-		//asendan küsimärgid
-		//iga märgikohta tuleb lisada üks täht ehk mis tüüpi muutuja on
-		//	s - string
-		//	i - int,arv
-		//  d - double
-		$stmt->bind_param("ssss", $signupEmail, $password, $gender, $_POST["birthdate"]);
+		signup($signupEmail, $password);
 		
 		
-		//täida käsku 
-		if($stmt->execute() ) {
-			echo "õnnests";			
-		} else{
-			echo "ERROR".$stmterror;
 		}
 		
 		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
+		
+		//kas kasutaja tahab sisse logida
+		if ( isset($_POST["loginEmail"]) &&
+			 isset($_POST["loginPassword"]) &&
+			 !empty($_POST["loginEmail"]) &&
+			 !empty($_POST["loginPassword"]) 
+		
+		) {
+			login($_POST["loginEmail"], $_POST["loginPassword"]);
+		
+		} 
+			 
+			 
+			 
 ?>
-
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -263,11 +242,7 @@
 		
 		<input type = "submit" value = "LOO KASUTAJA" >
 		
-		
-		
-		
-		
-		
+			
 		
 		
 	</form>
