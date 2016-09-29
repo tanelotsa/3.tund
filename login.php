@@ -3,6 +3,11 @@
 	require("../../config.php");
 	require("functions.php");
 	
+	//kui on sisseloginud, suunan data lehele
+	if (isset($_SESSION["userId"])) {
+		header("Location: data.php");		
+	}
+	
 	//var_dump($_GET);
 	//echo "<br>";
 	//var_dump($_POST);
@@ -134,7 +139,7 @@
 		
 		$password = hash("sha512",$_POST["signupPassword"]);
 	
-		echo $password ;
+		//echo $password ;
 		
 		signup($signupEmail, $password);
 		
@@ -143,7 +148,7 @@
 		
 		
 		
-		
+		$notice = "";
 		//kas kasutaja tahab sisse logida
 		if ( isset($_POST["loginEmail"]) &&
 			 isset($_POST["loginPassword"]) &&
@@ -151,7 +156,7 @@
 			 !empty($_POST["loginPassword"]) 
 		
 		) {
-			login($_POST["loginEmail"], $_POST["loginPassword"]);
+			$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
 		
 		} 
 			 
@@ -167,6 +172,7 @@
 <body>
 
 	<h1>Logi Sisse</h1>
+	<p> <?=$notice;?> </p>
 	<form method="POST">
 	
 		<label>E-Post:</label> 

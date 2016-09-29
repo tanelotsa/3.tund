@@ -1,4 +1,10 @@
 <?php
+	//see fail peab olema seotud kõigiga, kus tahame sessiooni kasutada
+	//saab kasutada nüüd $_SESSION muutujat
+	
+	session_start();
+
+
 	$database = "if16_taneotsa_4";
 	
 	function signup($email, $password) {
@@ -30,6 +36,9 @@
 	
 	function login ($email, $password) {
 	
+		$notice = "";
+			
+	
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
 		$stmt = $mysqli ->prepare("
@@ -55,16 +64,26 @@
 			$hash = hash("sha512", $password);
 			
 			if ($hash == $passwordFromDb) {
-				echo "Kasutaja logis sisse";
+				echo "Kasutaja $id logis sisse";
+				
+				$_SESSION ["userId"] = $id;
+				$_SESSION ["userEmail"] = $emailFromDb;
+				
+				header("Location: data.php");
+				
+				
+				
+				
 			} else {
-				echo "Parool vale !";
+				$notice = "Parool vale !";
 			}
 		
 		} else {	
 			//ei olnud ühtegi rida
-			echo "Sellise e-mailiga ".$email." kasutajat ei ole olemas!";
+			$notice = "Sellise e-mailiga ".$email." kasutajat ei ole olemas!";
 		}
-	
+		
+		return $notice;
 	
 	}
 	
