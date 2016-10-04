@@ -21,6 +21,8 @@
 			
 			$loginEmailError = "Sisesta E-Post !";
 		
+		} else {
+			$loginEmail = $_POST["loginEmail"];
 		}
 	
 	}
@@ -35,7 +37,7 @@
 			
 			$loginPasswordError = "Sisesta Parool !";
 		
-		}
+		} 
 	
 	}
 		
@@ -121,7 +123,7 @@
 	if ( $signupEmailError == "" &&
 		 $signupPasswordError == "" &&
 		 $birthdateError == "" &&
-		
+		 $genderError == "" &&
 		 
 		 isset($_POST["signupEmail"]) &&
 		 isset($_POST["signupPassword"]) &&
@@ -179,7 +181,7 @@
 		
 		<br>
 		
-		<input name="loginEmail" type = "email" > <?php echo $loginEmailError ; ?>
+		<input name="loginEmail" type = "email" value="<?=$loginEmail;?>"> <?php echo $loginEmailError ; ?>
 		
 		<br><br>
 		

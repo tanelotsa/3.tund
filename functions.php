@@ -22,7 +22,7 @@
 		//	s - string
 		//	i - int,arv
 		//  d - double
-		$stmt->bind_param("ssss", $email, $password, $gender, $_POST["birthdate"]);
+		$stmt->bind_param("ssss", $email, $password, $_POST["gender"], $_POST["birthdate"]);
 		
 		
 		//täida käsku 
