@@ -1,6 +1,8 @@
 <?php
-	//see fail peab olema seotud kõigiga, kus tahame sessiooni kasutada
-	//saab kasutada nüüd $_SESSION muutujat
+	require("../../config.php");
+	
+	//see fail peab olema seotud kÃµigiga, kus tahame sessiooni kasutada
+	//saab kasutada nÃ¼Ã¼d $_SESSION muutujat
 	
 	session_start();
 
@@ -9,7 +11,7 @@
 	
 	function signup($email, $password) {
 		
-		//loon ühenduse 
+		//loon Ã¼henduse 
 		
 		
 		
@@ -17,17 +19,17 @@
 		
 		$stmt = $mysqli ->prepare("INSERT INTO user_sample (email, password, gender, birthdate) VALUE(?,?,?,?)");
 		echo $mysqli->error;
-		//asendan küsimärgid
-		//iga märgikohta tuleb lisada üks täht ehk mis tüüpi muutuja on
+		//asendan kÃ¼simÃ¤rgid
+		//iga mÃ¤rgikohta tuleb lisada Ã¼ks tÃ¤ht ehk mis tÃ¼Ã¼pi muutuja on
 		//	s - string
 		//	i - int,arv
 		//  d - double
 		$stmt->bind_param("ssss", $email, $password, $_POST["gender"], $_POST["birthdate"]);
 		
 		
-		//täida käsku 
+		//tÃ¤ida kÃ¤sku 
 		if($stmt->execute() ) {
-			echo "õnnests";			
+			echo "Ã•nnestus!";			
 		} else{
 			echo "ERROR".$stmterror;
 		}
@@ -54,13 +56,13 @@
 		
 		$stmt->bind_param("s", $email);
 		
-		//rea kohta tulba väärtus
-		$stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created, $grender, $birthdate);
+		//rea kohta tulba vÃ¤Ã¤rtus
+		$stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created, $gender, $birthdate);
 		
 		$stmt->execute();
 		//ainult SELECT'i puhul
 		if($stmt->fetch()) {
-			//oli olemas, rida käes
+			//oli olemas, rida kÃ¤es
 			$hash = hash("sha512", $password);
 			
 			if ($hash == $passwordFromDb) {
@@ -79,7 +81,7 @@
 			}
 		
 		} else {	
-			//ei olnud ühtegi rida
+			//ei olnud Ã¼htegi rida
 			$notice = "Sellise e-mailiga ".$email." kasutajat ei ole olemas!";
 		}
 		
@@ -87,15 +89,25 @@
 	
 	}
 	
+	function saveEvent($age,$color) {
+		
+		
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+		
+		$stmt = $mysqli ->prepare("INSERT INTO whistle (age, color) VALUE(?,?)");
+		echo $mysqli->error;
+		
+		$stmt->bind_param("is", $age, $color);
 	
+		if($stmt->execute() ) {
+			echo "Ã•nnestus!";			
+		} else{
+			echo "ERROR".$stmterror;
+		}
 	
+	}
 	
-	
-	
-	
-	
-	
-	
+		
 	
 	/*
 	function hello ($firstname, $lastname) {

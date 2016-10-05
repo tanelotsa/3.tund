@@ -1,6 +1,6 @@
 <?php
 	
-	require("../../config.php");
+	
 	require("functions.php");
 	
 	//kui on sisseloginud, suunan data lehele
@@ -43,6 +43,7 @@
 		
 	$signupEmailError = "";
 	$signupEmail = "";
+	$loginEmail = "";
 	//kas keegi vajutas nuppu 
 	
 	if (isset ($_POST["signupEmail"])) {
