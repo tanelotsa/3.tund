@@ -28,7 +28,11 @@
 			saveEvent($_POST["age"],$_POST["color"]);
 		}
 	
-	
+		$people = getAllPeople();
+		
+		//echo "<pre>";
+		//var_dump($people);
+		//echo "</pre>";
 		
 ?>
 
@@ -68,5 +72,68 @@
 		<input type = "submit" value = "SAVE" >
 		
 	</form>
+	
+	<h2>Arhiiv</h2>
+	
+<?php
+	
+	
+	$html = "<table>";
+	
+		$html .= "<tr>";
+			$html .= "<td>ID</td>";
+			$html .= "<td>Vanus</td>";
+			$html .= "<td>Värv</td>";
+		$html .= "</tr>";
+		
+		foreach ($people as $p) {
+			
+			$html .= "<tr>";
+				$html .= "<td>".$p->id."</td>";
+				$html .= "<td>".$p->age."</td>";
+				$html .= "<td>".$p->color."</td>";
+			$html .= "</tr>";
+			
+		}
+		
+	$html .= "</table>";
+	
+	echo $html;	
+?>
+	
+<h3>Midagi huvitavat</h3>
+	
+<?php
+
+		foreach ($people as $p) {
+			
+			$style = "
+			
+				background-color:".$p->color.";
+				width: 40px;
+				height: 40px;
+				border-radius: 20px;
+				text-align: center;
+				line-height: 30px;
+				float: left;
+				margin: 20px;
+			";	
+				
+			echo "<p style = ' ".$style." '>".$p->age."</p>";
+		
+		}
+
+
+
+
+
+
+
+
+
+
+
+?>	
+	
 </body>	
 </html>

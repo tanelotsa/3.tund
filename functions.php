@@ -100,14 +100,44 @@
 		$stmt->bind_param("is", $age, $color);
 	
 		if($stmt->execute() ) {
-			echo "Õnnestus!";			
+			echo "Õnnestus!","<br>";			
 		} else{
 			echo "ERROR".$stmterror;
 		}
 	
 	}
 	
+	function getAllPeople () {
 		
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+		
+		$stmt = $mysqli->prepare("SELECT id, age, color FROM whistle");
+		$stmt->bind_result($id, $age, $color);
+		$stmt->execute ();
+		
+		$results = array();
+		
+		//tsükli sisu tehakse niimitu korda , mitu rida sql lausega tuleb
+		while($stmt->fetch()) {
+			
+			$human = new StdClass();
+			$human->id = $id;
+			$human->age = $age;
+			$human->color = $color;
+			
+			//echo $color."<br>";
+			array_push($results,$human);
+		}
+		
+		return $results;
+	}
+
+
+
+
+
+
+	
 	
 	/*
 	function hello ($firstname, $lastname) {
